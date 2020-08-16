@@ -4,8 +4,6 @@
 
 > One paragraph statement about the project.
 
-![screenshot](./app_screenshot.png)
-
 Additional description about the project and its features.
 
 ## Built With
@@ -13,10 +11,6 @@ Additional description about the project and its features.
 - Major languages,
 - frameworks,
 - technologies used
-
-## Live Demo
-
-[Live Demo Link](https://livedemo.com)
 
 
 ## Getting Started
