@@ -1,53 +1,36 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Project Name
+# Implementation of Ruby’s enumerable methods
 
-> One paragraph statement about the project.
-
-Additional description about the project and its features.
+The project invovled the use of #ruby built-in enumerable method,  #loop, #yield. This project allowed us to understand ruby better.
 
 ## Built With
 
-- Major languages,
-- frameworks,
-- technologies used
+- Ruby.
 
 
 ## Getting Started
 
-**This is an example of how you may give instructions on setting up your project locally.**
-**Modify this file to match your project, remove sections that don't apply. For example: delete the testing section if the currect project doesn't require testing.**
-
-
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
-
-### Setup
-
-### Install
-
-### Usage
-
-### Run tests
-
-### Deployment
-
+- git clone https://github.com/mohapakram/Ruby_Enumerables.git
+- cd into above cloned directory
+- run ruby enumerable.rb
 
 
 ## Authors
 
-👤 **Author1**
+👤 **Mohap Akram**
 
-- Github: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- Linkedin: [linkedin](https://linkedin.com/linkedinhandle)
+- Github: @mohabakram
+- Twitter: @mohapakram
+- Linkedin: mohabakram
 
-👤 **Author2**
+👤 **Popoola Grace**
 
-- Github: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- Linkedin: [linkedin](https://linkedin.com/linkedinhandle)
+- Github: [@GraceOyiza](https://github.com/GraceOyiza)
+- Twitter: [@_PopsonGrace](https://twitter.com/_PopsonGrace)
+- LinkedIn: [@grace](https://www.linkedin.com/in/grace-popoola-657a181aa/)
 
 ## 🤝 Contributing
 
