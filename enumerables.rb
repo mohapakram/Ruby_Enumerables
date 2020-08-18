@@ -1,6 +1,7 @@
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
+
     each do |item|
       yield item
     end
@@ -26,6 +27,7 @@ module Enumerable
     results_array = []
     each do |item|
       next unless yield item
+
       results_array << item
     end
     results_array
@@ -67,11 +69,11 @@ module Enumerable
     result
   end
 
-  def my_count(n = nil)
+  def my_count(number = nil)
     count = 0
-    if n
+    if number
       each do |i|
-        count += n if i == n
+        count += number if i == number
       end
     end
 
@@ -91,6 +93,7 @@ module Enumerable
         item = proc.call(i)
       else
         return to_enum(:my_map) unless block_given?
+
         item = yield i
       end
       end_array.push item
