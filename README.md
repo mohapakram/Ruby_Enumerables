@@ -22,7 +22,7 @@ To get a local copy up and running follow these simple example steps.
 
 👤 **Mohap Akram**
 
-- Github: [@mohabakram](https://github.com/mohabakram)
+- Github: [@mohabakram](https://github.com/mohapakram)
 - Twitter: [@mohapakram](https://twitter.com/mohapakram)
 - Linkedin: [mohabakram](https://www.linkedin.com/in/mohab-akram-667093131/)
 
