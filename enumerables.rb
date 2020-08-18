@@ -50,12 +50,33 @@ module Enumerable
     result
    end 
 
-end
+   def my_none?(pattern = nil)
+    result = true
+    if block_given?
+      each do |item| 
+        result = false if yield item
+      end 
+   elsif pattern 
+      each do |item|
+       result = false if pattern.match(item)
+      end 
+   else 
+      each do |item|
+      result = false if item
+      end 
+   end
+  result
+ end
 
+
+end
+      
+
+ 
 
 array = [1,2,4]
 
 
-
-result = %w[ant bear cat].my_all?
+result = [nil, false].none?                      #=> true
+# result = %w[ant bear cat].my_all?
 p result
