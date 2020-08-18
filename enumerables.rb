@@ -67,6 +67,24 @@ module Enumerable
    end
   result
  end
+     
+
+     def my_count(n = nil)
+        if n
+          count = 0
+          each do |i|
+         count += n if i == n
+          end
+         end  
+
+          return length unless block_given? 
+
+        count = 0
+        each do |i|
+          count += 1 if yield i
+        end 
+        count
+     end
 
 
 end
@@ -77,6 +95,7 @@ end
 array = [1,2,4]
 
 
-result = [nil, false].none?                      #=> true
+result = array.count(2)            #=> 2               #=> 4                     #=> true
 # result = %w[ant bear cat].my_all?
 p result
+
