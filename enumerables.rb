@@ -68,34 +68,47 @@ module Enumerable
   result
  end
      
-
-     def my_count(n = nil)
-        if n
-          count = 0
-          each do |i|
-         count += n if i == n
-          end
-         end  
-
-          return length unless block_given? 
-
-        count = 0
+  def my_count(n = nil)
+    count = 0
+    if n
         each do |i|
-          count += 1 if yield i
-        end 
-        count
-     end
+        count += n if i == n
+        end
+    end  
 
+    return length unless block_given? 
+
+    each do |i|
+        count += 1 if yield i
+    end 
+    count
+  end
+
+  def my_map(proc = nil) 
+    end_array = []
+    each do |i|
+      if proc 
+       item = proc.call(i)
+       end_array << item 
+      else 
+        return to_enum(:my_map) unless block_given?
+        item = yield i
+        end_array << item 
+      end
+    end
+   end_array
+  end
+
+   def my_inject(acc = 0,&operation)
+   each do |i|
+    acc = operation.call(i,acc) 
+   end
+   acc
+  end
 
 end
       
 
- 
-
-array = [1,2,4]
-
-
-result = array.count(2)            #=> 2               #=> 4                     #=> true
-# result = %w[ant bear cat].my_all?
-p result
-
+def multiply_els(array)
+  array.my_inject(1,&:*)
+end
