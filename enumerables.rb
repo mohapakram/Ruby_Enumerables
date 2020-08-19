@@ -158,7 +158,7 @@ def multiply_els(array)
   array.my_inject(1, &:*)
 end
 
-# rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength,Metrics/ClassLength
+# rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength
 # rubocop:enable Metrics/MethodLength
 longest = %w[cat sheep bear].inject do |memo, word|
   memo.length > word.length ? memo : word
