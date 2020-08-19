@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength
+#  rubocop:disable Metrics/MethodLength
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -33,15 +35,21 @@ module Enumerable
     results_array
   end
 
-  def my_all?(pattern = nil)
+  def my_all?(arg = nil)
     result = true
     if block_given?
       each do |item|
         result = false unless yield item
       end
-    elsif pattern
-      each do |item|
-        result = false unless pattern.match(item)
+    elsif arg
+      if arg.is_a?(Regexp)
+        each do |item|
+          result = false unless arg.match(item)
+        end
+      else
+        each do |item|
+          result = false unless arg == item
+        end
       end
     else
       each do |item|
@@ -51,15 +59,50 @@ module Enumerable
     result
   end
 
-  def my_none?(pattern = nil)
+  def my_any?(arg = nil)
+    result = true
+    if block_given?
+      each do |i|
+        next if yield i
+
+        result = false
+      end
+    elsif arg
+      if arg.is_a?(Regexp)
+        p 'is regexp'
+        each do |item|
+          result = false unless arg.match(item)
+        end
+      else
+        each do |item|
+          result = false unless arg == item
+        end
+      end
+    else
+      each do |i|
+        next if i
+
+        result = false
+      end
+    end
+    result
+  end
+
+  def my_none?(arg = nil)
     result = true
     if block_given?
       each do |item|
         result = false if yield item
       end
-    elsif pattern
-      each do |item|
-        result = false if pattern.match(item)
+    elsif arg
+      if arg.is_a?(Regexp)
+        each do |item|
+          result = false if arg.match(item)
+        end
+      else
+        each do |item|
+          result = false if arg == item
+        end
       end
     else
       each do |item|
@@ -102,6 +145,8 @@ module Enumerable
   end
 
   def my_inject(acc = 0)
+    acc = Array(self)[0] if acc.is_a?(Symbol)
+
     each do |i|
       acc = yield(i, acc)
     end
@@ -112,3 +157,10 @@ end
 def multiply_els(array)
   array.my_inject(1, &:*)
 end
+
+# rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength,Metrics/ClassLength
+# rubocop:enable Metrics/MethodLength
+longest = %w[cat sheep bear].inject do |memo, word|
+  memo.length > word.length ? memo : word
+end
+p longest
