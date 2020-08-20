@@ -155,9 +155,7 @@ module Enumerable
       each do |i|
         acc = yield(i, acc)
       end
-    # condition 1 arg --> Must be a symbol and raise error TypeError otherwise
     elsif args.length == 1
-      # return raise TypeError unless args[0].is_a? Symbol
       if args[0].is_a? Symbol
         operation = args[0]
 
@@ -165,7 +163,7 @@ module Enumerable
           acc = i.send(operation, acc)
         end
       elsif args[0].is_a? Numeric
-        return raise LocalJumpError, 'no block given' unless block_given?
+        return raise TypeError, "#{args[0]} is not a symbol nor a string" unless block_given?
 
         acc = args[0]
 
@@ -175,7 +173,6 @@ module Enumerable
 
       end
 
-    # condition 2 args --> first must be number and  second my a symbol or have ablock
     elsif args.length == 2
       return raise TypeError unless args[0].is_a? Numeric
 
@@ -202,3 +199,5 @@ end
 
 # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength
 # rubocop:enable Metrics/MethodLength,Style/CaseEquality
+
+[2, 3, 3].my_inject(1)
