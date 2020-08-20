@@ -1,5 +1,5 @@
 # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength
-#  rubocop:disable Metrics/MethodLength
+#  rubocop:disable Metrics/MethodLength,Style/CaseEquality
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -48,7 +48,7 @@ module Enumerable
         end
       else
         each do |item|
-          result = false unless arg == item
+          result = false unless arg === item
         end
       end
     else
@@ -60,29 +60,28 @@ module Enumerable
   end
 
   def my_any?(arg = nil)
-    result = true
+    result = false
     if block_given?
       each do |i|
-        next if yield i
+        result = true if yield i
 
-        result = false
+        next
       end
     elsif arg
       if arg.is_a?(Regexp)
-        p 'is regexp'
         each do |item|
-          result = false unless arg.match(item)
+          result = true if arg.match(item)
         end
       else
         each do |item|
-          result = false unless arg == item
+          result = true if arg === item
         end
       end
     else
       each do |i|
-        next if i
+        result = true if i
 
-        result = false
+        next
       end
     end
     result
@@ -113,6 +112,8 @@ module Enumerable
   end
 
   def my_count(number = nil)
+    input = Array(self)
+
     count = 0
     if number
       each do |i|
@@ -120,7 +121,7 @@ module Enumerable
       end
     end
 
-    return length unless block_given?
+    return input.length unless block_given?
 
     each do |i|
       count += 1 if yield i
@@ -144,11 +145,13 @@ module Enumerable
     end_array
   end
 
-  def my_inject(acc = 0)
+  def my_inject(acc = 0, operation = nil)
     acc = Array(self)[0] if acc.is_a?(Symbol)
 
     each do |i|
-      acc = yield(i, acc)
+      acc = yield(i, acc) if block_given?
+
+      acc = i.send(operation, acc) unless operation.nil?
     end
     acc
   end
@@ -159,8 +162,10 @@ def multiply_els(array)
 end
 
 # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength
-# rubocop:enable Metrics/MethodLength
-longest = %w[cat sheep bear].inject do |memo, word|
-  memo.length > word.length ? memo : word
-end
-p longest
+# rubocop:enable Metrics/MethodLength,Style/CaseEquality
+# longest = %w[cat sheep bear].inject do |memo, word|
+#   memo.length > word.length ? memo : word
+# end
+# p longest
+results = %w[rod blade].inject { |memo, word| memo.length > word.length ? memo : word }
+p results
