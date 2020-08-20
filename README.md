@@ -2,12 +2,11 @@
 
 # Implementation of Ruby’s enumerable methods
 
-The project invovled the use of #ruby built-in enumerable method,  #loop, #yield. This project allowed us to understand ruby better.
+The project involved the use of #ruby built-in enumerable method, #loop, #yield. This project allowed us to understand ruby better.
 
 ## Built With
 
 - Ruby.
-
 
 ## Getting Started
 
@@ -16,7 +15,6 @@ To get a local copy up and running follow these simple example steps.
 - git clone https://github.com/mohapakram/Ruby_Enumerables.git
 - cd into above cloned directory
 - run ruby enumerable.rb
-
 
 ## Authors
 
@@ -29,7 +27,7 @@ To get a local copy up and running follow these simple example steps.
 👤 **Popoola Grace**
 
 - Github: [@GraceOyiza](https://github.com/GraceOyiza)
-- Twitter: [@_PopsonGrace](https://twitter.com/_PopsonGrace)
+- Twitter: [@\_PopsonGrace](https://twitter.com/_PopsonGrace)
 - LinkedIn: [@grace](https://www.linkedin.com/in/grace-popoola-657a181aa/)
 
 ## 🤝 Contributing
