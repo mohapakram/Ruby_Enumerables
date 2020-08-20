@@ -117,14 +117,14 @@ module Enumerable
     count = 0
     if number
       each do |i|
-        count += number if i == number
+        count += 1 if i == number
       end
-    end
+    else
+      return input.length unless block_given?
 
-    return input.length unless block_given?
-
-    each do |i|
-      count += 1 if yield i
+      each do |i|
+        count += 1 if yield i
+      end
     end
     count
   end
@@ -145,13 +145,52 @@ module Enumerable
     end_array
   end
 
-  def my_inject(acc = 0, operation = nil)
-    acc = Array(self)[0] if acc.is_a?(Symbol)
+  def my_inject(*args)
+    acc = 0
+    operation = nil
+    if args.empty?
+      return raise LocalJumpError, 'no block given' unless block_given?
 
-    each do |i|
-      acc = yield(i, acc) if block_given?
+      acc = Array(self)[0]
+      each do |i|
+        acc = yield(i, acc)
+      end
+    # condition 1 arg --> Must be a symbol and raise error TypeError otherwise
+    elsif args.length == 1
+      # return raise TypeError unless args[0].is_a? Symbol
+      if args[0].is_a? Symbol
+        operation = args[0]
 
-      acc = i.send(operation, acc) unless operation.nil?
+        each do |i|
+          acc = i.send(operation, acc)
+        end
+      elsif args[0].is_a? Numeric
+        return raise LocalJumpError, 'no block given' unless block_given?
+
+        acc = args[0]
+
+        each do |i|
+          acc = yield(i, acc)
+        end
+
+      end
+
+    # condition 2 args --> first must be number and  second my a symbol or have ablock
+    elsif args.length == 2
+      return raise TypeError unless args[0].is_a? Numeric
+
+      acc = args[0]
+      operation = args[1] if args[1].is_a? Symbol
+
+      each do |i|
+        if block_given?
+          acc = yield(i, acc)
+        elsif !operation.nil?
+          acc = i.send(operation, acc)
+        else
+          return raise TypeError
+        end
+      end
     end
     acc
   end
@@ -163,9 +202,3 @@ end
 
 # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength
 # rubocop:enable Metrics/MethodLength,Style/CaseEquality
-# longest = %w[cat sheep bear].inject do |memo, word|
-#   memo.length > word.length ? memo : word
-# end
-# p longest
-results = %w[rod blade].inject { |memo, word| memo.length > word.length ? memo : word }
-p results
