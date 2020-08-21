@@ -152,16 +152,22 @@ module Enumerable
       return raise LocalJumpError, 'no block given' unless block_given?
 
       acc = Array(self)[0]
-      each do |i|
-        acc = yield(i, acc)
+
+      each_with_index do |item, index|
+        next if index === 0
+        acc = yield(item, acc)
       end
+
     elsif args.length == 1
       if args[0].is_a? Symbol
         operation = args[0]
+        acc = Array(self)[0]
 
-        each do |i|
-          acc = i.send(operation, acc)
+        each_with_index do |item, index|
+          next if index === 0
+          acc = item.send(operation, acc)
         end
+
       elsif args[0].is_a? Numeric
         return raise TypeError, "#{args[0]} is not a symbol nor a string" unless block_given?
 
@@ -199,5 +205,3 @@ end
 
 # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength
 # rubocop:enable Metrics/MethodLength,Style/CaseEquality
-
-[2, 3, 3].my_inject(1)
