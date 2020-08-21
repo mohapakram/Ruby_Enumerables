@@ -155,6 +155,7 @@ module Enumerable
 
       each_with_index do |item, index|
         next if index === 0
+
         acc = yield(item, acc)
       end
 
@@ -165,6 +166,7 @@ module Enumerable
 
         each_with_index do |item, index|
           next if index === 0
+
           acc = item.send(operation, acc)
         end
 
