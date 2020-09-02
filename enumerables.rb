@@ -1,5 +1,5 @@
 # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength
-#  rubocop:disable Metrics/MethodLength,Style/CaseEquality
+# rubocop:disable Metrics/MethodLength,Style/CaseEquality
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?

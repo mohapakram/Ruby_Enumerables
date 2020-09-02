@@ -1,3 +1,4 @@
+# rubocop:disable Style/SymbolProc,Layout/LineLength
 require '../enumerables'
 
 describe Enumerable do
@@ -97,3 +98,5 @@ describe Enumerable do
     end
   end
 end
+
+# rubocop:enable Style/SymbolProc,Layout/LineLength
