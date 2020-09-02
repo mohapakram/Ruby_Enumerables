@@ -2,7 +2,15 @@
 
 # Implementation of Ruby’s enumerable methods
 
-The project involved the use of #ruby built-in enumerable method, #loop, #yield. This project allowed us to understand ruby better.
+The project is our own implementation of ruby Enumerables module in which we created the following methods
+- my_each
+- my_select
+- my_inject
+- my_map
+- my_each_with_index
+- my_none?
+- my_count
+- my_all?
 
 ## Built With
 
@@ -14,7 +22,16 @@ To get a local copy up and running follow these simple example steps.
 
 - git clone https://github.com/mohapakram/Ruby_Enumerables.git
 - cd into above cloned directory
-- run ruby enumerable.rb
+- run `ruby enumerable.rb`
+
+## Running Tests
+
+If you don't have 'Rspec' installed on your machine run 
+`gem install rspec`
+
+Then make sure that you are in the root directory of the project and run
+`rspec` 
+in the terminal 
 
 ## Authors
 
