@@ -207,4 +207,3 @@ end
 
 # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ModuleLength
 # rubocop:enable Metrics/MethodLength,Style/CaseEquality
-
