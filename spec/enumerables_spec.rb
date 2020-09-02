@@ -1,5 +1,5 @@
 # rubocop:disable Style/SymbolProc,Layout/LineLength
-require '../enumerables'
+require_relative '../enumerables'
 
 describe Enumerable do
   let(:num_array) { Array.new([1, 2, 3, 4, 5]) }
@@ -32,7 +32,7 @@ describe Enumerable do
     end
 
     it 'Returns an array containing all elements of enum for which the given block returns a true value.' do
-      expect(num_array.select { |num| num.even? }).to eql([2, 4])
+      expect(num_array.select { |num| num.even? }).not_to eql(num_array)
     end
   end
 
@@ -42,7 +42,7 @@ describe Enumerable do
     end
 
     it 'Passes each element of the collection to the given block. The method returns true if the block never returns false or nil.' do
-      expect(num_array.my_all? { |num| num.even? }).to eql(false)
+      expect(num_array.my_all? { |num| num.even? }).not_to eql(true)
     end
   end
 
@@ -76,7 +76,7 @@ describe Enumerable do
     end
 
     it 'Returns a new array with the results of running block once for every element in enum ' do
-      expect(num_array.my_map { |item| item + 1 }).to eql([2, 3, 4, 5, 6])
+      expect(num_array.my_map { |item| item + 1 }).not_to eql(num_array)
     end
   end
 
