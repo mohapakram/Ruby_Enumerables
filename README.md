@@ -26,11 +26,14 @@ To get a local copy up and running follow these simple example steps.
 
 ## Running Tests
 
-If you don't have 'Rspec' installed on your machine run 
-`gem install rspec`
-
+If you don't have `rspec` gem installed on your machine run 
+```bash
+$ gem install rspec
+```
 Then make sure that you are in the root directory of the project and run
-`rspec` 
+```bash
+$ rspec
+```
 in the terminal 
 
 ## Authors
