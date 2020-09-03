@@ -56,6 +56,20 @@ describe Enumerable do
     end
   end
 
+  describe '#my_none?' do
+    it 'If the block is not given, none? will return true only if none of the collection members is true.' do
+      expect(bool_array.my_none?).to eql(false)
+    end
+
+    it 'Passes each element of the collection to the given block. The method returns true if the block never returns true for all elements.' do
+      expect(strings_array.my_none? { |word| word.length >= 4 }).to eql(false)
+    end
+
+    it 'If instead a pattern is supplied, the method returns whether pattern === element for none of the collection members.' do
+      expect(strings_array.my_none?(/d/)).to eql(true)
+    end
+  end
+
   describe '#my_count' do
     it 'Returns the number of items in enum through enumeration.' do
       expect(bool_array.my_count).to eql(3)
@@ -95,6 +109,12 @@ describe Enumerable do
 
     it 'If no initial value for memo, then the first element of collection is used as the initial value of memo.' do
       expect(strings_array.my_inject { |memo, word| memo.length > word.length ? memo : word }).to eql('sheep')
+    end
+  end
+
+  describe 'multiply_els' do
+    it 'Multiply all the elements inside an array and return the value' do
+      expect(multiply_els(num_array)).to eql(120)
     end
   end
 end
