@@ -10,6 +10,14 @@ describe "Enumerable" do
         expect(answer).to eq([1,2,3,4])
     end    
  end
+
+     describe "#my_each_with_index" do
+        it "passes through each items and index and passes a block" do
+           array.my_each_with_index { |item, index| answer << item ; answer << index}
+           expect(answer).to eq([1, 0, 2, 1, 3, 2, 4, 3])
+         end
+       end
+
   
 
  end
