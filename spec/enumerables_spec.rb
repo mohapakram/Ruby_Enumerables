@@ -4,12 +4,12 @@ describe "Enumerable" do
     let (:array) { [1, 2, 3, 4] }
     let (:answer) { [] }
   
-    context "#my_each" do
-    it "iterates through an array" do
+    describe "#my_each" do
+       it "iterates through an array" do
         array.my_each { |item| answer << item } 
         expect(answer).to eq([1,2,3,4])
-    end    
- end
+       end    
+     end
 
      describe "#my_each_with_index" do
         it "passes through each items and index and passes a block" do
@@ -17,12 +17,12 @@ describe "Enumerable" do
            expect(answer).to eq([1, 0, 2, 1, 3, 2, 4, 3])
          end
        end
+
        describe "#my_select" do
-        it "goes through each element and selects elements that meet the block condition" do
+         it "goes through each element and selects elements that meet the block condition" do
           answer = array.my_select { |item| item % 2 == 0 }
           expect(answer).to eq([2,4])
         end
-    
         it "returns empty array if all elements do not meet the block condition" do
           answer = array.my_select { |item| item > 4 }
           expect(answer).to eq([])
@@ -34,7 +34,6 @@ describe "Enumerable" do
           answer = array.my_all? { |item| item < 5 }
           expect(answer).to be true
         end
-    
         it "returns false if one of the elements does not meet the block condition" do
           answer = array.my_all? { |item| item != 2 }
           expect(answer).to be false
@@ -46,7 +45,6 @@ describe "Enumerable" do
           answer = array.my_any? { |item| item == 2 }
           expect(answer).to be true
         end
-    
         it "returns false if none of the elements meet the block condition" do
           answer = array.my_any? { |item| item == 0 }
           expect(answer).to be false
@@ -58,7 +56,6 @@ describe "Enumerable" do
           answer = array.my_none? { |item| item == 100 }
           expect(answer).to be true
         end
-    
         it "returns false if one of the elements meet the block condition" do
           answer = array.my_none? { |item| item == 4 }
           expect(answer).to be false
@@ -67,7 +64,7 @@ describe "Enumerable" do
     
       describe "#my_count" do
         it "returns a count of how many elements meet the block condition" do
-          answer = array.my_count { |item| item > 2 }
+          answer = array.my_count { |item|  item > 2}
           expect(answer).to eq(2)
         end
       end
