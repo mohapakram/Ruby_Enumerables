@@ -41,9 +41,15 @@ Lint/RaiseException:
   Enabled: false
 Lint/StructNewOverride:
   Enabled: false
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: false
 Style/HashEachMethods:
   Enabled: false
 Style/HashTransformKeys:
   Enabled: false
 Style/HashTransformValues:
+  Enabled: false
+Style/Semicolon:
+  Enabled: false
+Style/BlockComments:
   Enabled: false
