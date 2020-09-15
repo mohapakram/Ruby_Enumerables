@@ -1,122 +1,85 @@
-# rubocop:disable Style/SymbolProc,Layout/LineLength
-require_relative '../enumerables'
+require_relative '../enumerables.rb'
 
-describe Enumerable do
-  let(:num_array) { Array.new([1, 2, 3, 4, 5]) }
-  let(:bool_array) { Array.new([true, true, true]) }
-  let(:num_range) { (5..10) }
-  let(:strings_array) { %w[cat sheep bear] }
+describe 'Enumerable' do
+  let (:array) { [1, 2, 3, 4] }
+  let (:answer) { [] }
+
   describe '#my_each' do
-    it 'If no block is given, an enumerator is returned instead.' do
-      expect(num_array.my_each).to be_an Enumerator
-    end
-
-    it 'Calls block with one argument, for each item in enum.' do
-      expect(num_array.my_each { |item| item * 2 }).to eql(num_array)
+    it 'iterates through an array' do
+      array.my_each { |item| answer << item }
+      expect(answer).to eq([1, 2, 3, 4])
     end
   end
 
   describe '#my_each_with_index' do
-    it 'If no block is given, an enumerator is returned instead.' do
-      expect(num_array.my_each).to be_an Enumerator
-    end
-
-    it 'Calls block with two arguments, the item and its index, for each item in enum.' do
-      expect(num_array.my_each { |item, _index| item * 2 }).to eql(num_array)
+    it 'passes through each items and index and passes a block' do
+      array.my_each_with_index { |item, index| answer << item; answer << index }
+      expect(answer).to eq([1, 0, 2, 1, 3, 2, 4, 3])
     end
   end
 
   describe '#my_select' do
-    it 'If no block is given, an enumerator is returned instead.' do
-      expect(num_array.my_each).to be_an Enumerator
+    it 'goes through each element and selects elements that meet the block condition' do
+      answer = array.my_select(&:even?)
+      expect(answer).to eq([2, 4])
     end
-
-    it 'Returns an array containing all elements of enum for which the given block returns a true value.' do
-      expect(num_array.select { |num| num.even? }).not_to eql(num_array)
+    it 'returns empty array if all elements do not meet the block condition' do
+      answer = array.my_select { |item| item > 4 }
+      expect(answer).to eq([])
     end
   end
 
   describe '#my_all?' do
-    it 'If the block is not given, return true when none of the collection members are false or nil.' do
-      expect(bool_array.my_all?).to eql(true)
+    it 'returns true if all elements meet the block condition' do
+      answer = array.my_all? { |item| item < 5 }
+      expect(answer).to be true
     end
-
-    it 'Passes each element of the collection to the given block. The method returns true if the block never returns false or nil.' do
-      expect(num_array.my_all? { |num| num.even? }).not_to eql(true)
+    it 'returns false if one of the elements does not meet the block condition' do
+      answer = array.my_all? { |item| item != 2 }
+      expect(answer).to be false
     end
   end
 
   describe '#my_any?' do
-    it 'If the block is not given, return true when none of the collection members are false or nil.' do
-      expect(bool_array.my_any?).to eql(true)
+    it 'returns true if at least one of the elements meets the block condition' do
+      answer = array.my_any? { |item| item == 2 }
+      expect(answer).to be true
     end
-
-    it 'Passes each element of the collection to the given block. The method returns true if the block ever returns a value other than false or nil.' do
-      expect(num_array.my_any? { |num| num.even? }).to eql(true)
+    it 'returns false if none of the elements meet the block condition' do
+      answer = array.my_any? { |item| item == 0 }
+      expect(answer).to be false
     end
   end
 
   describe '#my_none?' do
-    it 'If the block is not given, none? will return true only if none of the collection members is true.' do
-      expect(bool_array.my_none?).to eql(false)
+    it 'returns true if none of the elements meet the block condition' do
+      answer = array.my_none? { |item| item == 100 }
+      expect(answer).to be true
     end
-
-    it 'Passes each element of the collection to the given block. The method returns true if the block never returns true for all elements.' do
-      expect(strings_array.my_none? { |word| word.length >= 4 }).to eql(false)
-    end
-
-    it 'If instead a pattern is supplied, the method returns whether pattern === element for none of the collection members.' do
-      expect(strings_array.my_none?(/d/)).to eql(true)
+    it 'returns false if one of the elements meet the block condition' do
+      answer = array.my_none? { |item| item == 4 }
+      expect(answer).to be false
     end
   end
 
   describe '#my_count' do
-    it 'Returns the number of items in enum through enumeration.' do
-      expect(bool_array.my_count).to eql(3)
-    end
-
-    it 'If an argument is given, the number of items in enum that are equal to item are counted. ' do
-      expect(num_array.my_count(2)).to eql(1)
-    end
-
-    it 'If a block is given, it counts the number of elements yielding a true value.' do
-      expect(num_array.my_count { |num| num.even? }).to eql(2)
+    it 'returns a count of how many elements meet the block condition' do
+      answer = array.my_count { |item| item > 2 }
+      expect(answer).to eq(2)
     end
   end
 
   describe '#my_map' do
-    it 'If no block is given, an enumerator is returned instead.' do
-      expect(num_array.my_map).to be_an Enumerator
-    end
-
-    it 'Returns a new array with the results of running block once for every element in enum ' do
-      expect(num_array.my_map { |item| item + 1 }).not_to eql(num_array)
+    it 'returns a new array with the elements modified by the block' do
+      answer = array.my_map { |item| item + 2 }
+      expect(answer).to eq([3, 4, 5, 6])
     end
   end
 
   describe '#my_inject' do
-    it 'Combines all elements of enum by applying a binary operation, specified by a block or a symbol that names a method or operator.' do
-      expect(num_range.my_inject(:+)).to eql(45)
-    end
-
-    it 'If you specify a block, then for each element in enum the block is passed an accumulator value (memo) and the element.' do
-      expect(num_range.my_inject { |sum, n| sum + n }).to eql(45)
-    end
-
-    it 'If you specify a symbol instead, then each element in the collection will be passed to the named method of memo.' do
-      expect(num_range.my_inject(1, :*)).to eql(151_200)
-    end
-
-    it 'If no initial value for memo, then the first element of collection is used as the initial value of memo.' do
-      expect(strings_array.my_inject { |memo, word| memo.length > word.length ? memo : word }).to eql('sheep')
-    end
-  end
-
-  describe 'multiply_els' do
-    it 'Multiply all the elements inside an array and return the value' do
-      expect(multiply_els(num_array)).to eql(120)
+    it 'takes a parameter and yields to the block and returns the modified parameter' do
+      answer = array.my_inject(0) { |item, index| item + index }
+      expect(answer).to eq(10)
     end
   end
 end
-
-# rubocop:enable Style/SymbolProc,Layout/LineLength
