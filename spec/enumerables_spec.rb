@@ -20,7 +20,7 @@ describe 'Enumerable' do
 
   describe '#my_select' do
     it 'goes through each element and selects elements that meet the block condition' do
-      answer = array.my_select { |item| item.even? }
+      answer = array.my_select(&:even?)
       expect(answer).to eq([2, 4])
     end
     it 'returns empty array if all elements do not meet the block condition' do
